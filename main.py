@@ -15,6 +15,33 @@ character_count = {
 
 }
 
+character_value = {
+    "A": 5,
+    "B": 9,
+    "C": 2,
+    "D": 9
+
+}
+
+def check_winnings(columns, lines, bet, values):
+    winnings = 0
+    winning_lines = []
+    for line in range(lines):
+        character = columns[0][line]
+        for column in columns:
+            charater_to_check = column[line]
+            if character != character_to_check:
+                break
+            else:
+                winning += values[character] * bet
+                winning_lines.append(lines + 1)
+                
+    return winnings, winning_lines
+
+
+
+
+
 def get_spin(rows, cols, characters):
     all_characters =[]
     for character, character_count in characters.items():
@@ -102,6 +129,9 @@ def main():
 
     slots = get_spin(ROWS, COLS, character_count)
     print_slot_machine(slots)
+    winnings, winning_lines = check_winnings(slots, lines, bet, character_value)
+    print(f'You won ${winnings}')
+    print(f'You won on lines: {winning_lines}')
 
 
 main()
