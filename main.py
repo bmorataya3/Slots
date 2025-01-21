@@ -29,12 +29,12 @@ def check_winnings(columns, lines, bet, values):
     for line in range(lines):
         character = columns[0][line]
         for column in columns:
-            charater_to_check = column[line]
+            character_to_check = column[line]
             if character != character_to_check:
                 break
             else:
-                winning += values[character] * bet
-                winning_lines.append(lines + 1)
+                winnings += values[character] * bet
+                winning_lines.append(line + 1)
                 
     return winnings, winning_lines
 
@@ -43,7 +43,7 @@ def check_winnings(columns, lines, bet, values):
 
 
 def get_spin(rows, cols, characters):
-    all_characters =[]
+    all_characters = []
     for character, character_count in characters.items():
         for _ in range(character_count):
             all_characters.append(character)
@@ -110,9 +110,7 @@ def get_bet():
                 print('Please enter number')
     return amount 
 
-def main():
-    balance = deposit()
-
+def game(balance):
     lines = get_number_of_lines()
     while True:
         bet= get_bet()
@@ -131,7 +129,21 @@ def main():
     print_slot_machine(slots)
     winnings, winning_lines = check_winnings(slots, lines, bet, character_value)
     print(f'You won ${winnings}')
-    print(f'You won on lines: {winning_lines}')
+    print(f'You won on lines:', *winning_lines)
+    return winnings - total_bet
+
+def main():
+    balance = deposit()
+    while True:
+        print(f' Current Balance is ${balance}')
+        response = input('press enter to sping(q to quit)')
+        if response == "q":
+            break
+        balance += game(balance)
+
+    print(f'you left with ${balance}')
+
+
 
 
 main()
